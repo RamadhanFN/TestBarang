@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 public class TambahData extends AppCompatActivity {
     private DatabaseReference database;
 
@@ -38,7 +39,7 @@ public class TambahData extends AppCompatActivity {
                 if (!(etKode.getText().toString().isEmpty())&&
                         !(etnama.getText().toString().isEmpty()))
                     submitBrg(new Barang(etKode.getText().toString(),
-                            etnama.getText().toString()));
+                            etnama.getText().toString()), etKode.getText().toString());
                 else
                     Toast.makeText(getApplicationContext(),"Data tidak boleh kosong",
                             Toast.LENGTH_LONG).show();
@@ -49,8 +50,8 @@ public class TambahData extends AppCompatActivity {
             }
         });
     }
-    public void submitBrg (Barang brg){
-        database.child("Barang").push().setValue(brg).addOnSuccessListener(this,
+    public void submitBrg (Barang brg, String id){
+        database.child("Barang").child(id).setValue(brg).addOnSuccessListener(this,
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
